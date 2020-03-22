@@ -65,7 +65,7 @@ Inside the data directory, there is a file called "users.csv". This file contain
 
 Identify users that have email addresses with six or less characters before the @ symbol where none of these characters are numbers.
 ```
-ggrep ,{1,6}@ users.csv
+ggrep -E ',[a-z]{1,6}@' users.csv | ggrep '\w'
 ```
 
 
