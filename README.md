@@ -25,6 +25,7 @@ Once you've reviewed these results, repeat the process but this time using the -
 ```
 ggrep started -c transaction_data_daily_event_log_20190129.dat
 ```
+-c flag stand for count
 
 
 Use grep to find all instances where the upload was successful. 
@@ -36,6 +37,7 @@ Once you've reviewed these results, determine how many matching occurrences were
 ```
 ggrep complete transaction_data_daily_event_log_20190129.dat | wc -l
 ```
+-wc -l command stands for word count
 
 
 Use grep to find all instances where the upload failed. Ensure your output displays the line numbers for each match.
@@ -43,6 +45,8 @@ Use grep to find all instances where the upload failed. Ensure your output displ
 ```
 ggrep failure -nP transaction_data_daily_event_log_20190129.dat
 ```
+-nP flag displays the line numbers where the matches occured
+
 
 Upon review, we would like to only view failures with error code SYSOFFLINE or WEAKSIGNAL.
 
@@ -61,13 +65,14 @@ Inside the data directory, there is a file called "users.csv". This file contain
 
 Identify users that have email addresses with six or less characters before the @ symbol where none of these characters are numbers.
 ```
-users.csv
+ggrep ,{1,6}@ users.csv
 ```
 
 
 Marketing research has shown that the paper business is picking up in the academia space. Corporate has requested a list of all registered users that have an edu emaill address. Use grep to find the appropriate lines and output the results to a file called academia_users.txt.
 ```
 ggrep -iP -r '.edu' users.csv > academia_users.txt
+ggrep -iP -c .edu users.csv
 ```
 
 
@@ -77,7 +82,10 @@ Ryan Howard did a poor job and used the CC field rather than the BCC field for t
 
 Use grep to identify the user with a single regex pattern.
 ```
-awk -F',' '$5 ~ /184/ { print $1,$2,$3,$5,$6 }' users.csv
+ggrep ',184' users.csv | ggrep ',38'
+ggrep ',184\.' users.csv | ggrep ',38'
+ggrep -E ',184' users.csv | grep ',38'
+ggrep -E ',184\.' users.csv | grep ',38'
 ```
 
 
